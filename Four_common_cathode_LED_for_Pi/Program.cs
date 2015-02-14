@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Threading;
 
 namespace Four_common_cathode_LED_for_Pi
@@ -10,65 +7,70 @@ namespace Four_common_cathode_LED_for_Pi
     {
         static void Main(string[] args)
         {
-            //4位初始化
-            GPIO.GPIO_Control(4, SetGPIOState.GPIOState.GPIO_out);
-            GPIO.GPIO_Control(17, SetGPIOState.GPIOState.GPIO_out);
-            //GPIO.GPIO_Control(18, SetGPIOState.GPIOState.GPIO_out);
-            //GPIO.GPIO_Control(27, SetGPIOState.GPIOState.GPIO_out);
+            int[] GPIO_N = { 4, 17, 18, 27, 21, 20, 26, 19, 25, 16, 13, 6 };
 
-            //8个阴极的启动方式
-            //GPIO.GPIO_Control(21, SetGPIOState.GPIOState.GPIO_low);     ---    A
-            //GPIO.GPIO_Control(20, SetGPIOState.GPIOState.GPIO_low);     ---    B
-            //GPIO.GPIO_Control(26, SetGPIOState.GPIOState.GPIO_low);     ---    G
-            //GPIO.GPIO_Control(19, SetGPIOState.GPIOState.GPIO_low);     ---    C
-            //GPIO.GPIO_Control(25, SetGPIOState.GPIOState.GPIO_low);     ---    P
-            //GPIO.GPIO_Control(16, SetGPIOState.GPIOState.GPIO_low);     ---    D
-            //GPIO.GPIO_Control(13, SetGPIOState.GPIOState.GPIO_low);     ---    E
-            //GPIO.GPIO_Control(6, SetGPIOState.GPIOState.GPIO_low);      ---    F
+            GPIO.GPIO_register(GPIO_N);
 
-            //输出数字5
+            GPIO.GPIO_direction(4, GPIO.GPIOStatic.GPIO_out);
+            GPIO.GPIO_direction(17, GPIO.GPIOStatic.GPIO_out);
+            GPIO.GPIO_direction(18, GPIO.GPIOStatic.GPIO_out);
+            GPIO.GPIO_direction(27, GPIO.GPIOStatic.GPIO_out);
 
             while (true)
             {
-                //第一位5
-                GPIO.GPIO_Control(21, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(26, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(19, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(16, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(6, SetGPIOState.GPIOState.GPIO_low);
+                //5
+                GPIO.GPIO_direction(21, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(19, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(16, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(6, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(26, GPIO.GPIOStatic.GPIO_low);
 
-                GPIO.GPIO_Send(4, 1);
+                GPIO.GPIO_send(4, 1);
+                Thread.Sleep(300);
+                GPIO.GPIO_send(4, 0);
 
-                Thread.Sleep(1);
-
-                GPIO.GPIO_Send(4, 0);
-                //GPIO.GPIO_Release_num();
-                //Thread.Sleep(1000);
-
-
-                //GPIO.GPIO_Control(21, SetGPIOState.GPIOState.GPIO_high);
-                //GPIO.GPIO_Control(26, SetGPIOState.GPIOState.GPIO_high);
-                //GPIO.GPIO_Control(19, SetGPIOState.GPIOState.GPIO_high);
-                //GPIO.GPIO_Control(16, SetGPIOState.GPIOState.GPIO_high);
-                //GPIO.GPIO_Control(6, SetGPIOState.GPIOState.GPIO_high);
+                int[] a = { 21, 19, 16, 6, 26 };
+                GPIO.GPIO_unregister(a);
+                GPIO.GPIO_register(a);
+                ////////////////////////////////////////////
 
 
-                //第二位2
-                GPIO.GPIO_Control(21, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(20, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(26, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(13, SetGPIOState.GPIOState.GPIO_low);
-                GPIO.GPIO_Control(16, SetGPIOState.GPIOState.GPIO_low);
+                //2
+                GPIO.GPIO_direction(21, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(20, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(26, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(13, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(16, GPIO.GPIOStatic.GPIO_low);
 
-                GPIO.GPIO_Send(17, 1);
+                GPIO.GPIO_send(17, 1);
+                Thread.Sleep(300);
+                GPIO.GPIO_send(17, 0);
 
-                Thread.Sleep(1);
+                int[] b = { 21, 20, 26, 13, 16 };
+                GPIO.GPIO_unregister(b);
+                GPIO.GPIO_register(b);
+                ////////////////////////////////////////////
 
-                GPIO.GPIO_Send(17, 0);
-               // GPIO.GPIO_Release_num();
+
+                //0
+                GPIO.GPIO_direction(21, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(20, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(19, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(16, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(13, GPIO.GPIOStatic.GPIO_low);
+                GPIO.GPIO_direction(6, GPIO.GPIOStatic.GPIO_low);
+
+                GPIO.GPIO_send(18, 1);
+                Thread.Sleep(300);
+                GPIO.GPIO_send(18, 0);
+
+                int[] c = { 21, 20, 19, 13, 16, 6 };
+                GPIO.GPIO_unregister(c);
+                GPIO.GPIO_register(c);
+                ////////////////////////////////////////////
 
             }
-            
+
 
         }
     }
